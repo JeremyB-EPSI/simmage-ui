@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, Input, OnChanges, Output, EventEmitter } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnChanges, Output, EventEmitter, LOCALE_ID, Inject } from '@angular/core';
 import {
   startOfDay,
   endOfDay,
@@ -62,14 +62,13 @@ export class EventsCalendarComponent implements OnChanges {
     }
   };
 
-  locale: string = localStorage.getItem('lang') || 'en';
-
   activeDayIsOpen: boolean = true;
 
   @Output() openForm: EventEmitter<number> = new EventEmitter();
   @Output() deleteEvent: EventEmitter<number> = new EventEmitter();
 
-  constructor(private dialog: DialogEventDetailsService, private service: EventService) { }
+  constructor(private dialog: DialogEventDetailsService, private service: EventService,
+    @Inject(LOCALE_ID) protected locale) { }
 
   ngOnChanges() {
     if (this.eventsList) {
